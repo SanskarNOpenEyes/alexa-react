@@ -245,3 +245,73 @@ footer {
   color: #95a5a6;
   font-size: 0.9rem;
 }
+/* Styles for the home page */
+.home-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.home-page h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 50px;
+}
+
+.portal-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.portal-option {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portal-option:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.portal-option i {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.portal-option h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.portal-option p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.portal-option.admin {
+  background: linear-gradient(to bottom right, #ffffff, #f0f7ff);
+  border: 1px solid #e1f0ff;
+}
+
+.portal-option.admin i {
+  color: #3498db;
+}
+
+.portal-option.user {
+  background: linear-gradient(to bottom right, #ffffff, #f5fff0);
+  border: 1px solid #e1ffe1;
+}
+
+.portal-option.user i {
+  color: #2ecc71;
+}

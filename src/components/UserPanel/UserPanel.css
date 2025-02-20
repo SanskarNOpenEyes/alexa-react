@@ -1,0 +1,133 @@
+.user-survey-panel {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .user-survey-panel header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .user-survey-panel header h1 {
+    color: #2c3e50;
+    font-size: 2.2rem;
+  }
+  
+  .user-survey-panel header h1 i {
+    color: #3498db;
+    margin-right: 10px;
+  }
+  
+  .survey-access.card,
+  .user-survey-form.card,
+  .completion-screen.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .error-message {
+    background-color: #ffe5e5;
+    color: #e74c3c;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+  }
+  
+  /* Survey Access Form */
+  .survey-access form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* User Survey Form */
+  .question-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .question-item:last-child {
+    border-bottom: none;
+  }
+  
+  .question-text {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #34495e;
+  }
+  
+  .answer-input textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+  }
+  
+  .answer-input textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .form-actions {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  /* Completion Screen */
+  .completion-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  .success-icon {
+    font-size: 4rem;
+    color: #2ecc71;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .completion-screen h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: #2c3e50;
+  }
+  
+  .completion-screen p {
+    color: #7f8c8d;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+  
+  .submission-id {
+    font-family: monospace;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin: 20px 0;
+    font-size: 0.9rem !important;
+  }
+  
+  .completion-screen button {
+    margin-top: 20px;
+  }
