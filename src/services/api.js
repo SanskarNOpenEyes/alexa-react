@@ -1,13 +1,13 @@
 // services/api.js - API service for all backend interactions
 import { showNotification } from './notification';
 
-const API_URL = 'http://localhost:8000';  // Replace with your actual API URL
+const API_URL = 'http://127.0.0.1:8000';  // Replace with your actual API URL
 
 // Generate a random survey number
 export function generateSurveyNumber() {
   const year = new Date().getFullYear();
   const randomNum = Math.floor(1000 + Math.random() * 9000); 
-  return `Survey ID-${year}-${randomNum}`;
+  return `${year}${randomNum}`;
 }
 
 // Function to create a survey  
@@ -32,6 +32,7 @@ export async function createSurvey(surveyName) {
     await updateSurveyName(result.id, surveyName);
     
     showNotification('Survey created successfully', 'success');
+    showNotification(`Survey number: ${surveyNumber}`)
     return result;
   } catch (error) {
     console.error('Error:', error);
