@@ -27,7 +27,7 @@ const HomePage = () => (
 
 const App = () => {
   const [surveys, setSurveys] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   
   useEffect(() => {
     loadSurveys();
