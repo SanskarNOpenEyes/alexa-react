@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import SurveyForm from './components/SurveyForm';
-import SurveyList from './components/SurveyList';
+// import SurveyForm from './components/SurveyForm';
+// import SurveyList from './components/SurveyList';
 import { fetchSurveys } from './services/api';
 import AdminPanel from './components/AdminPanel';
 import UserSurveyPanel from './components/UserPanel/UserSurveyPanel';
@@ -46,15 +46,7 @@ const App = () => {
         <Route path="/take-survey" element={<UserSurveyPanel />} />
       </Routes>
       <div className="container">
-        <header>
-          <h1><i className="fas fa-clipboard-list"></i> Survey Management System</h1>
-        </header>
-        <SurveyForm onSurveyCreated={loadSurveys} />
-        <SurveyList 
-          surveys={surveys} 
-          loading={loading}
-          onUpdate={loadSurveys}
-        />
+        
         <footer>
           <p>&copy; 2025 Survey Management System</p>
         </footer>

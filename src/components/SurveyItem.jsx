@@ -1,16 +1,12 @@
 // components/SurveyItem.jsx - Component for individual survey items
 import React, { useState } from 'react';
-import { 
-  updateSurveyName, 
-  deleteSurvey, 
-  addQuestion, 
-  updateQuestions, 
-  deleteQuestion 
-} from '../services/api';
+import { updateSurveyName, deleteSurvey, addQuestion, updateQuestions, deleteQuestion } from '../services/api';
 
 const SurveyItem = ({ survey, onUpdate }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [newQuestion, setNewQuestion] = useState('');
+  const [questionType, setQuestionType] = useState('qa'); // Default type
+  const [mcqOptions, setMcqOptions] = useState(['']);
 
   const handleRename = async () => {
     const newName = prompt('Enter new survey name:', survey.name || '');
@@ -28,10 +24,10 @@ const SurveyItem = ({ survey, onUpdate }) => {
   };
 
   const handleEditQuestion = async (index) => {
-    const newQuestionText = prompt('Edit question:', survey.questions[index]);
+    const newQuestionText = prompt('Edit question:', survey.questions[index]?.question_text);
     if (newQuestionText) {
       const updatedQuestions = [...survey.questions];
-      updatedQuestions[index] = newQuestionText;
+      updatedQuestions[index].question_text = newQuestionText;
       await updateQuestions(survey.id, updatedQuestions);
       onUpdate();
     }
@@ -39,7 +35,7 @@ const SurveyItem = ({ survey, onUpdate }) => {
 
   const handleDeleteQuestion = async (index) => {
     if (window.confirm('Are you sure you want to delete this question?')) {
-      await deleteQuestion(survey.id, survey.questions[index]);
+      await deleteQuestion(survey.id, survey.questions[index]?.question_text);
       onUpdate();
     }
   };
@@ -47,18 +43,22 @@ const SurveyItem = ({ survey, onUpdate }) => {
   const handleAddQuestion = async (e) => {
     e.preventDefault();
     if (newQuestion.trim()) {
-      await addQuestion(survey.id, newQuestion);
+      const questionData = {
+        question_text: newQuestion,
+        question_type: questionType,
+        ...(questionType === 'mcq' ? { mcq_options: mcqOptions } : {})
+      };
+
+      await addQuestion(survey.id, questionData);
       setNewQuestion('');
+      setMcqOptions(['']);
       onUpdate();
     }
   };
 
   return (
     <div className="survey-item">
-      <button 
-        className={`accordion ${isExpanded ? 'active' : ''}`}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
+      <button className={`accordion ${isExpanded ? 'active' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
         <div className="survey-info">
           <span className="survey-name">{survey.name || 'Unnamed Survey'}</span>
         </div>
@@ -77,29 +77,22 @@ const SurveyItem = ({ survey, onUpdate }) => {
           <div className="questions-header">
             <h3>Questions ({survey.questions.length})</h3>
           </div>
-          
+
           {survey.questions.length === 0 ? (
-            <div className="empty-state">
-              No questions yet. Add your first question below.
-            </div>
+            <div className="empty-state">No questions yet. Add your first question below.</div>
           ) : (
             survey.questions.map((question, index) => (
               <div className="question" key={index}>
                 <div className="question-content">
                   <span className="question-number">Q{index + 1}.</span>
-                  <span className="question-text">{question}</span>
+                  <span className="question-text">{question.question_text}</span>
+                  <span className="question-type">({question.question_type || 'QA'})</span> 
                 </div>
                 <div className="edit-buttons">
-                  <button 
-                    className="btn secondary edit-question"
-                    onClick={() => handleEditQuestion(index)}
-                  >
+                  <button className="btn secondary edit-question" onClick={() => handleEditQuestion(index)}>
                     <i className="fas fa-edit"></i>
                   </button>
-                  <button 
-                    className="btn danger delete-question"
-                    onClick={() => handleDeleteQuestion(index)}
-                  >
+                  <button className="btn danger delete-question" onClick={() => handleDeleteQuestion(index)}>
                     <i className="fas fa-trash"></i>
                   </button>
                 </div>
@@ -108,15 +101,36 @@ const SurveyItem = ({ survey, onUpdate }) => {
           )}
 
           <form className="add-question-form" onSubmit={handleAddQuestion}>
-            <input 
-              type="text" 
-              placeholder="Type new question here"
-              value={newQuestion}
-              onChange={(e) => setNewQuestion(e.target.value)}
-            />
-            <button type="submit" className="btn primary">
-              <i className="fas fa-plus"></i> Add
-            </button>
+            <input type="text" placeholder="Type new question here" value={newQuestion} onChange={(e) => setNewQuestion(e.target.value)} />
+
+            <select value={questionType} onChange={(e) => setQuestionType(e.target.value)}>
+              <option value="qa">QA (Text Answer)</option>
+              <option value="mcq">MCQ (Multiple Choice)</option>
+              <option value="rating">Rating-Based</option>
+            </select>
+
+            {questionType === 'mcq' && (
+              <div className="mcq-options">
+                {mcqOptions.map((option, index) => (
+                  <div key={index} className="mcq-option">
+                    <input
+                      type="text"
+                      placeholder={`Option ${index + 1}`}
+                      value={option}
+                      onChange={(e) => {
+                        const newOptions = [...mcqOptions];
+                        newOptions[index] = e.target.value;
+                        setMcqOptions(newOptions);
+                      }}
+                    />
+                    <button type="button" onClick={() => setMcqOptions(mcqOptions.filter((_, i) => i !== index))}>❌</button>
+                  </div>
+                ))}
+                <button type="button" onClick={() => setMcqOptions([...mcqOptions, ''])}>➕ Add Option</button>
+              </div>
+            )}
+
+            <button type="submit" className="btn primary">➕ Add Question</button>
           </form>
         </div>
       </div>

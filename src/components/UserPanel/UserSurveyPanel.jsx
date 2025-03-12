@@ -30,7 +30,8 @@ const UserSurveyPanel = () => {
 
   return (
     <div className="user-survey-panel container">
-      <header>
+      
+      <header>  
         <h1><i className="fas fa-poll-h"></i> Survey Portal</h1>
       </header>
       
