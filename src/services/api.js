@@ -1,8 +1,7 @@
 // services/api.js - API service for all backend interactions
 import { showNotification } from "./notification";
 
-// const API_URL = "http://34.16.121.9:8000"; // server
-const API_URL = "http://127.0.0.1:8000"; // local
+const API_URL = "http://127.0.0.1:8000"; // Replace with your actual API URL
 
 // Generate a random survey number
 export function generateSurveyNumber() {
@@ -11,6 +10,7 @@ export function generateSurveyNumber() {
   return `${year}${randomNum}`;
 }
 
+// Function to create a survey
 // Function to create a survey  
 export async function createSurvey(surveyName) {
   try {
@@ -136,23 +136,26 @@ export async function updateQuestions(surveyId, questions) {
 // Function to delete a question
 export async function deleteQuestion(surveyId, questionText) {
   try {
+    console.log(`🛠 Deleting question from survey ${surveyId}:`, questionText); // Debugging log
+
     const response = await fetch(`${API_URL}/surveys/${surveyId}/questions/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question: questionText }),
+      body: JSON.stringify({ question_text: questionText }), // 
     });
 
     if (!response.ok) {
-      throw new Error("Failed to delete question");
+      const errorText = await response.text();
+      throw new Error(`Failed to delete question: ${errorText}`);
     }
 
-    showNotification("Question deleted successfully", "success");
+    showNotification("✅ Question deleted successfully", "success");
     return await response.json();
   } catch (error) {
-    console.error("Error:", error);
-    showNotification("Failed to delete question", "error");
+    console.error("❌ Error deleting question:", error);
+    showNotification("❌ Failed to delete question", "error");
     return null;
   }
 }
