@@ -46,15 +46,19 @@ const SurveyItem = ({ survey, onUpdate }) => {
       const questionData = {
         question_text: newQuestion,
         question_type: questionType,
-        ...(questionType === 'mcq' ? { mcq_options: mcqOptions } : {})
       };
-
-      await addQuestion(survey.id, questionData);
-      setNewQuestion('');
-      setMcqOptions(['']);
-      onUpdate();
+  
+      try {
+        await addQuestion(survey.id, questionData);
+        setNewQuestion('');
+        setMcqOptions(['']); // Reset mcqOptions to default state
+        onUpdate();
+      } catch (error) {
+        console.error('Error adding question:', error);
+      }
     }
   };
+  
 
   return (
     <div className="survey-item">

@@ -1,7 +1,8 @@
 // services/api.js - API service for all backend interactions
 import { showNotification } from "./notification";
 
-const API_URL = "http://34.16.121.9:8000"; // Replace with your actual API URL
+// const API_URL = "http://34.16.121.9:8000"; // server
+const API_URL = "http://127.0.0.1:8000"; // local
 
 // Generate a random survey number
 export function generateSurveyNumber() {
@@ -10,7 +11,6 @@ export function generateSurveyNumber() {
   return `${year}${randomNum}`;
 }
 
-// Function to create a survey
 // Function to create a survey  
 export async function createSurvey(surveyName) {
   try {
