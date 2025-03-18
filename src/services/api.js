@@ -1,7 +1,7 @@
 // services/api.js - API service for all backend interactions
 import { showNotification } from "./notification";
 
-const API_URL = "http://127.0.0.1:8000"; // Replace with your actual API URL
+const API_URL = "http://34.16.121.9:8000"; // Replace with your actual API URL
 
 // Generate a random survey number
 export function generateSurveyNumber() {
