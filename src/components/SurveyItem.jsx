@@ -34,11 +34,20 @@ const SurveyItem = ({ survey, onUpdate }) => {
   };
 
   const handleDeleteQuestion = async (index) => {
-    if (window.confirm('Are you sure you want to delete this question?')) {
-      await deleteQuestion(survey.id, survey.questions[index]?.question_text);
-      onUpdate();
+    if (window.confirm("Are you sure you want to delete this question?")) {
+      const questionText = survey.questions[index]?.question_text; // Extract only question_text
+      if (!questionText) {
+        console.error("❌ No question text found for deletion!");
+        return;
+      }
+  
+      console.log(`🛠 Attempting to delete: ${questionText}`); // Debugging log
+  
+      await deleteQuestion(survey.id, questionText);
+      onUpdate(); 
     }
   };
+  
 
   const handleAddQuestion = async (e) => {
     e.preventDefault();
@@ -46,15 +55,22 @@ const SurveyItem = ({ survey, onUpdate }) => {
       const questionData = {
         question_text: newQuestion,
         question_type: questionType,
-        ...(questionType === 'mcq' ? { mcq_options: mcqOptions } : {})
+        mcq_options: questionType === "mcq" ? mcqOptions.filter(opt => opt.trim() !== '') : undefined, // Include mcq_options if MCQ
       };
-
-      await addQuestion(survey.id, questionData);
-      setNewQuestion('');
-      setMcqOptions(['']);
-      onUpdate();
+  
+      console.log("Sending question data:", JSON.stringify(questionData, null, 2)); // Debugging log
+  
+      try {
+        await addQuestion(survey.id, questionData);
+        setNewQuestion('');
+        setMcqOptions(['']); // Reset MCQ options
+        onUpdate();
+      } catch (error) {
+        console.error('Error adding question:', error);
+      }
     }
   };
+  
 
   return (
     <div className="survey-item">
