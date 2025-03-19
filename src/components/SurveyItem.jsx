@@ -35,15 +35,21 @@ const SurveyItem = ({ survey, onUpdate }) => {
 
   const handleDeleteQuestion = async (index) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
-      const questionText = survey.questions[index]?.question_text; // Extract only question_text
+      const questionText = survey.questions[index]?.question_text;
+      const questionType = survey.questions[index]?.question_type;
       if (!questionText) {
         console.error("❌ No question text found for deletion!");
         return;
       }
+
+      if (!questionType) {
+        console.error("❌ No question type found for deletion!");
+        return; 
+      }
   
       console.log(`🛠 Attempting to delete: ${questionText}`); // Debugging log
   
-      await deleteQuestion(survey.id, questionText);
+      await deleteQuestion(survey.id, questionText, questionType);
       onUpdate(); 
     }
   };
@@ -106,10 +112,10 @@ const SurveyItem = ({ survey, onUpdate }) => {
                 </div>
                 <div className="edit-buttons">
                   <button className="btn secondary edit-question" onClick={() => handleEditQuestion(index)}>
-                    <i className="fas fa-edit"></i>
+                    <i className="fas fa-edit">Rename</i>
                   </button>
                   <button className="btn danger delete-question" onClick={() => handleDeleteQuestion(index)}>
-                    <i className="fas fa-trash"></i>
+                    <i className="fas fa-trash">Delete</i>
                   </button>
                 </div>
               </div>

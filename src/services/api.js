@@ -134,7 +134,7 @@ export async function updateQuestions(surveyId, questions) {
 }
 
 // Function to delete a question
-export async function deleteQuestion(surveyId, questionText) {
+export async function deleteQuestion(surveyId, questionText, question_type) {
   try {
     console.log(`🛠 Deleting question from survey ${surveyId}:`, questionText); // Debugging log
 
@@ -143,7 +143,10 @@ export async function deleteQuestion(surveyId, questionText) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ question_text: questionText }), // 
+      body: JSON.stringify({ 
+        question_text: questionText, 
+        question_type: question_type, 
+      }), // 
     });
 
     if (!response.ok) {
