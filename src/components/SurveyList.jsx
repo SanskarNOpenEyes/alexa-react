@@ -9,20 +9,20 @@ const SurveyList = ({ surveys, loading, onUpdate }) => {
       <div className="counter">
         Found <span id="surveyCount">{surveys.length}</span> surveys
       </div>
-      
+
       {loading && (
         <div className="loading-indicator">
           <i className="fas fa-spinner fa-spin"></i> Loading...
         </div>
       )}
-      
+
       <div className="survey-accordion">
         {surveys.length === 0 ? (
           <div className="empty-state">
             No surveys found. Create your first survey above.
           </div>
         ) : (
-          surveys.map(survey => (
+          surveys.map((survey) => (
             <SurveyItem 
               key={survey.id} 
               survey={survey} 

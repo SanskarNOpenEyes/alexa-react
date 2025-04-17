@@ -37,23 +37,13 @@ const SurveyItem = ({ survey, onUpdate }) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
       const questionText = survey.questions[index]?.question_text;
       const questionType = survey.questions[index]?.question_type;
-      if (!questionText) {
-        console.error("❌ No question text found for deletion!");
-        return;
-      }
-
-      if (!questionType) {
-        console.error("❌ No question type found for deletion!");
-        return; 
-      }
-  
-      console.log(`🛠 Attempting to delete: ${questionText}`); // Debugging log
+      if (!questionText) return console.error("❌ No question text found for deletion!");
+      if (!questionType) return console.error("❌ No question type found for deletion!");
   
       await deleteQuestion(survey.id, questionText, questionType);
       onUpdate(); 
     }
   };
-  
 
   const handleAddQuestion = async (e) => {
     e.preventDefault();
@@ -63,8 +53,6 @@ const SurveyItem = ({ survey, onUpdate }) => {
         question_type: questionType,
         mcq_options: questionType === "mcq" ? mcqOptions.filter(opt => opt.trim() !== '') : undefined, // Include mcq_options if MCQ
       };
-  
-      console.log("Sending question data:", JSON.stringify(questionData, null, 2)); // Debugging log
   
       try {
         await addQuestion(survey.id, questionData);
@@ -76,13 +64,14 @@ const SurveyItem = ({ survey, onUpdate }) => {
       }
     }
   };
-  
 
   return (
     <div className="survey-item">
       <button className={`accordion ${isExpanded ? 'active' : ''}`} onClick={() => setIsExpanded(!isExpanded)}>
         <div className="survey-info">
-          <span className="survey-name">{survey.name || 'Unnamed Survey'}</span>
+          <span className="survey-name">
+            {survey.name || 'Unnamed Survey'} (#{survey.survey_number || 'N/A'}) {/* Displaying survey number */}
+          </span>
         </div>
         <div className="action-buttons" onClick={(e) => e.stopPropagation()}>
           <button className="btn secondary edit-name" onClick={handleRename}>
