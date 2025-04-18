@@ -28,8 +28,8 @@ const AdminPanel = () => {
       <header style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
         <img src={ logo } alt="Sans" style={{ width: '50px', height: '50px' }} />
         <div>
-          <h1><i className="fas fa-clipboard-list"></i>Openeyes Surveys Admin Panel</h1>
-          <p>Create & Manage Surveys</p>
+          <h1><i className="fas fa-clipboard-list"></i>Openeyes VoiceOver Surveys   </h1>
+          {/* <p>Create & Manage Surveys</p> */}
         </div>
       </header>
       

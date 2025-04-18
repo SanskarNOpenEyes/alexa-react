@@ -6,10 +6,14 @@ import { fetchSurveys } from './services/api';
 import AdminPanel from './components/AdminPanel';
 import UserSurveyPanel from './components/UserPanel/UserSurveyPanel';
 import './App.css';
+import logo from './components/logo.jpg' ;
+
 
 const HomePage = () => (
   <div className="home-page">
-    <h1>Survey Management System</h1>
+    <img src={logo} alt="Logo" style={{ width: '80px', height: '80px', marginBottom: '1rem' }} />
+    <h1>OpenEyes Survey System</h1>
+    
     <div className="portal-options">
       <Link to="/admin" className="portal-option admin">
         <i className="fas fa-user-shield"></i>
