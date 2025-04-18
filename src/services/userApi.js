@@ -1,6 +1,6 @@
 import { showNotification } from './notification';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://34.16.121.9:8000';
 export async function accessSurvey(surveyId, username) {
     try {
       // First attempt to get the survey by its survey_number
